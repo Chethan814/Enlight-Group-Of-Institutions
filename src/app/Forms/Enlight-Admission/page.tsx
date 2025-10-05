@@ -1,49 +1,23 @@
 "use client";
 
-import { useEffect, useState, FormEvent, useRef } from "react";
+import { useEffect, useState, FormEvent } from "react";
 import emailjs from "emailjs-com";
-
-// Safe anime.js import for Next.js + TypeScript
-let anime: any;
-if (typeof window !== 'undefined') {
-  anime = require('animejs').default;
-}
-
-type AnimeInstance = ReturnType<typeof anime>;
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function ApplicationForm() {
   const [total, setTotal] = useState(0);
   const [percentage, setPercentage] = useState("0%");
   const [today, setToday] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-
-  const animationRef = useRef<AnimeInstance | null>(null);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   useEffect(() => {
     // Set today's date
     const currentDate = new Date().toISOString().split("T")[0];
     setToday(currentDate);
 
-    // Run fade-in animation
-    try {
-      animationRef.current = anime({
-        targets: ".fade-in",
-        opacity: [0, 1],
-        translateY: [20, 0],
-        delay: anime.stagger(100),
-        duration: 800,
-        easing: "easeOutQuad",
-      });
-    } catch (error) {
-      console.error("Animation error:", error);
-    }
-
     // Initialize EmailJS (replace with your actual key)
     emailjs.init("lR2dfoi59fNoEUM_P");
-
-    return () => {
-      if (animationRef.current) animationRef.current.pause();
-    };
   }, []);
 
   // Handle marks input change
@@ -80,23 +54,9 @@ export default function ApplicationForm() {
       await emailjs.sendForm("service_vcmw8nt", "template_g0rhmkp", form);
 
       setSuccessMessage(`Thanks for submitting the form, ${studentName}`);
+      setShowSuccess(true);
 
-      anime({
-        targets: "#success-message",
-        opacity: [0, 1],
-        duration: 500,
-        easing: "easeOutQuad",
-        complete: () => {
-          setTimeout(() => {
-            anime({
-              targets: "#success-message",
-              opacity: [1, 0],
-              duration: 500,
-              easing: "easeInQuad",
-            });
-          }, 3000);
-        },
-      });
+      setTimeout(() => setShowSuccess(false), 4000);
 
       alert(`Thanks for submitting the form, ${studentName}`);
       form.reset();
@@ -111,17 +71,21 @@ export default function ApplicationForm() {
 
   return (
     <div className="relative py-10 bg-gradient-to-br from-white via-red-100 to-white">
-      {/* Background Image Animation */}
+      {/* Background Image */}
       <div
         className="fixed inset-0 -z-10 opacity-10 animate-[bgZoom_30s_ease-in-out_infinite_alternate] bg-cover bg-center"
         style={{ backgroundImage: "url('bgimage.jpeg')" }}
       />
 
-      <form
+      {/* Form Animation */}
+      <motion.form
         id="applicationForm"
-        className="max-w-5xl mx-auto bg-white p-8 rounded-2xl shadow-lg fade-in space-y-10 border border-red-300"
+        className="max-w-5xl mx-auto bg-white p-8 rounded-2xl shadow-lg space-y-10 border border-red-300"
         onSubmit={handleFormSubmit}
         encType="multipart/form-data"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
       >
         {/* Header */}
         <div className="flex justify-between items-start">
@@ -176,18 +140,6 @@ export default function ApplicationForm() {
           </select>
         </section>
 
-        {/* Academic Information */}
-        <section className="bg-white border border-red-200 rounded-lg p-6 shadow">
-          <h3 className="text-xl font-bold text-red-600 mb-4">Academic Information</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input type="text" placeholder="Last Exam Passed*" className="border p-2 rounded w-full" required />
-            <input type="text" placeholder="Board Name*" className="border p-2 rounded w-full" required />
-            <input type="text" placeholder="Year of Passing*" className="border p-2 rounded w-full" required />
-            <input type="text" placeholder="Registration No." className="border p-2 rounded w-full" />
-            <textarea placeholder="Name and address of last attended school" className="border p-2 rounded w-full"></textarea>
-          </div>
-        </section>
-
         {/* Marks Section */}
         <section className="bg-white border border-red-200 rounded-lg p-6 shadow">
           <h3 className="text-xl font-semibold text-red-600 mb-4">Marks Scored in Class XII</h3>
@@ -233,7 +185,7 @@ export default function ApplicationForm() {
           </div>
         </section>
 
-        {/* Submit & Reset Buttons */}
+        {/* Submit Buttons */}
         <div className="flex justify-center gap-6 pt-4">
           <button type="submit" className="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-2 rounded-md shadow">
             Submit
@@ -246,15 +198,23 @@ export default function ApplicationForm() {
         <div className="text-center text-sm text-gray-600 mt-6">
           &copy; All rights reserved | Design and developed by
         </div>
-      </form>
+      </motion.form>
 
-      {/* Success Message */}
-      <div
-        id="success-message"
-        className="fixed top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white text-lg font-semibold px-6 py-4 rounded-lg shadow-lg opacity-0 z-50 pointer-events-none"
-      >
-        {successMessage || "Form submitted successfully!"}
-      </div>
+      {/* ✅ Success Message with Framer Motion */}
+      <AnimatePresence>
+        {showSuccess && (
+          <motion.div
+            id="success-message"
+            className="fixed top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white text-lg font-semibold px-6 py-4 rounded-lg shadow-lg z-50"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.5 }}
+          >
+            {successMessage || "Form submitted successfully!"}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
