@@ -1,26 +1,19 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+// import { Inter } from 'next/font/google'
 import Script from 'next/script'
 import ClientLayout from './ClientLayout'
 import './globals.css';
 import '../../public/assets/css/style.css'
 import '../../public/assets/css/animate.min.css'
 import '../../public/assets/css/aos.min.css'
-import '../../public/assets/css/bootstrap.min.css'
+// import '../../public/assets/css/bootstrap.min.css'
 import '../../public/assets/css/icofont.min.css'
 import '../../public/assets/css/magnific-popup.css'
 import '../../public/assets/css/slick.css'
 import '../../public/assets/css/swiper-bundle.min.css'
-
 import '../../public/css/app.css'
 
 
-
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter'
-})
 
 export const metadata: Metadata = {
   title: 'Enlight Group of Institutions - Nursing & Paramedical Education',
@@ -58,7 +51,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en"  >
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
@@ -88,7 +81,7 @@ export default function RootLayout({
 
 
       </head>
-      <body className={inter.variable}>
+      <body >
         <ClientLayout>
           {children}
         </ClientLayout>

@@ -51,10 +51,10 @@ const Header = () => {
       name: 'Admission',
       path: '#',
       submenu: [
-        { name: 'Enquiry Now', path: 'https://enlight-enquiry-form.vercel.app', external: true },
+        { name: 'Enquiry Now', path: '/Forms/Enquiry-Form', external: true },
         { name: 'Online Admission', path: '#', external: true },
         { name: 'Prospectus Download', path: '/download-pdf' },
-        { name: 'Application Form', path: 'https://enlight.edu.in/public/assets/PDF/Enlight%20Final%202025.pdf', external: true }
+        { name: 'Application Form', path: '/Forms/Enlight-Admission' }
       ]
     },
     {
