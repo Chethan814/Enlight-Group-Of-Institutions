@@ -76,7 +76,7 @@ const Header = () => {
       ]
     },
     { name: 'Facilities', path: '/Facilities' },
-    { name: 'Contact', path: '/Contact' }
+    { name: 'Contacts', path: '/Contacts' }
   ];
 
   return (

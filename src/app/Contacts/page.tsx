@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaUser, FaEdit, FaPhoneAlt, FaPaperPlane } from 'react-icons/fa';
 
-const Contact = () => {
+const Contacts = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -384,4 +384,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default Contacts;
