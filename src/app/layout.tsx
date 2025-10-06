@@ -6,7 +6,7 @@ import './globals.css';
 import '../../public/assets/css/style.css'
 import '../../public/assets/css/animate.min.css'
 import '../../public/assets/css/aos.min.css'
-import '../../public/assets/css/bootstrap.min.css'
+// import '../../public/assets/css/bootstrap.min.css'
 import '../../public/assets/css/icofont.min.css'
 import '../../public/assets/css/magnific-popup.css'
 import '../../public/assets/css/slick.css'
@@ -78,6 +78,14 @@ export default function RootLayout({
         <title>Enlight Group of Institutions - Nursing & Paramedical Education</title>
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/cropped-Logo-180x180.png" />
+        
+        <link rel="stylesheet" href="/assets/css/style.css" />
+        <link rel="stylesheet" href="/assets/css/animate.min.css" />
+        <link rel="stylesheet" href="/assets/css/aos.min.css" />
+        <link rel="stylesheet" href="/assets/css/icofont.min.css" />
+        <link rel="stylesheet" href="/assets/css/magnific-popup.css" />
+        <link rel="stylesheet" href="/assets/css/slick.css" />
+        <link rel="stylesheet" href="/assets/css/swiper-bundle.min.css" />
 
 
       </head>
